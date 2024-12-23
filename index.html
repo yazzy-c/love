@@ -7,6 +7,7 @@
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -15,10 +16,50 @@
             font-family: 'Arial', sans-serif;
             text-align: center;
         }
+
+        h1, p {
+            margin: 10px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff1493;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff69b4;
+        }
     </style>
 </head>
 <body>
     <h1>Hi Love! ❤️</h1>
-    <p>Just wanted to say you’re the best thing that ever happened to me. 😘</p>
+    <p id="message">Just wanted to say you’re the best thing that ever happened to me. 😘</p>
+    <button onclick="changeMessage()">Click me for another message</button>
+
+    <script>
+        // Array of messages to show
+        const messages = [
+            "You make every day brighter. 🌞",
+            "I love you more than words can say. 💕",
+            "You’re my favorite person in the world. 🌍",
+            "Thanks for being my everything. 💖",
+            "You make my heart so happy! 🥰"
+        ];
+
+        // Function to change the message
+        function changeMessage() {
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            const messageElement = document.getElementById("message");
+            messageElement.textContent = messages[randomIndex];
+        }
+    </script>
 </body>
 </html>
+
