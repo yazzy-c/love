@@ -57,11 +57,18 @@
         ];
 
         // Function to change the message
-        function changeMessage() {
-            const randomIndex = Math.floor(Math.random() * messages.length);
-            const messageElement = document.getElementById("message");
-            messageElement.textContent = messages[randomIndex];
+        let currentIndex = 0; // Keep track of the current message index
+
+        function showNextMessage() {
+        const messageElement = document.getElementById("message");
+
+        // Update the message to the current index
+        messageElement.textContent = messages[currentIndex];
+    
+        // Increment the index and reset to 0 if it exceeds the array length
+        currentIndex = (currentIndex + 1) % messages.length;
         }
+
     </script>
 </body>
 </html>
