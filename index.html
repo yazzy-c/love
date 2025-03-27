@@ -63,6 +63,9 @@
     <button onclick="showNextMessage()">Click me for another message</button>
     <img src="Image.jpeg" alt= "In love" width="400">
 
+    <input type="text" id="messageInput" placeholder="Enter your message for me...">
+    <button id="sendMessage" onclick="addMessage()">Send Message</button>
+
     <script>
         // Array of messages to show
         const messages = [
@@ -101,17 +104,21 @@
             
         ];
 
-        // Function to change the message
-        let currentIndex = 0; // Keep track of the current message index
+        let currentIndex = 0;
 
         function showNextMessage() {
             const messageElement = document.getElementById("message");
-    
-            // Update the message to the current index
             messageElement.textContent = messages[currentIndex];
-        
-            // Increment the index and reset to 0 if it exceeds the array length
             currentIndex = (currentIndex + 1) % messages.length;
+        }
+
+        function addMessage() {
+            const newMessage = document.getElementById("messageInput").value;
+            if (newMessage.trim() !== "") {
+                messages.push(newMessage);
+                document.getElementById("messageInput").value = ""; // Clear input
+                alert("Message added! Click the button to see it."); // Optional feedback
+            }
         }
 
     </script>
