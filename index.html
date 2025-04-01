@@ -124,7 +124,7 @@
         function sendToServer() {
             const message = document.getElementById("messageInput").value;
             if (message.trim() !== "") {
-                fetch('/save-message', {
+                fetch('https://love-6g8a.onrender.com/save-message', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
