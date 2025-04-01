@@ -39,15 +39,13 @@ app.post('/save-message', (req, res) => {
     });
 });
 
-// Optional route to fetch all messages
 app.get('/messages', (req, res) => {
-    db.all(`SELECT * FROM messages ORDER BY timestamp DESC`, [], (err, rows) => {
-        if (err) {
-            return res.status(500).send("Error fetching messages");
-        }
+    db.all(`SELECT content, timestamp FROM messages ORDER BY timestamp DESC`, [], (err, rows) => {
+        if (err) return res.status(500).send("Error fetching messages");
         res.json(rows);
     });
 });
+
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
