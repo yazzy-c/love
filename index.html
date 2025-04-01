@@ -66,6 +66,11 @@
     <input type="text" id="messageInput" placeholder="Enter your message for me...">
     <button id="sendMessage" onclick="sendToServer()">Send Message</button>
 
+    <div id="messagesList" style="margin-top: 30px;">
+        <h2>📜 Messages You've Sent:</h2>
+        <div id="messagesContainer"></div>
+    </div>
+
     <script>
         // Array of messages to show
         const messages = [
@@ -112,19 +117,11 @@
             currentIndex = (currentIndex + 1) % messages.length;
         }
 
-        function addMessage() {
-            const newMessage = document.getElementById("messageInput").value;
-            if (newMessage.trim() !== "") {
-                //messages.push(newMessage);
-                document.getElementById("messageInput").value = ""; // Clear input
-                alert("Message added! Click the button to see it."); // Optional feedback
-            }
-        }
-
+        <script>
         function sendToServer() {
             const message = document.getElementById("messageInput").value;
             if (message.trim() !== "") {
-                fetch('https://love-6g8a.onrender.com/save-message', {
+                fetch('/save-message', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -133,10 +130,9 @@
                 })
                 .then(response => response.text())
                 .then(data => {
-                    console.log(data); // Log server response
-                    alert("Message sent!");
+                    alert(data);
                     document.getElementById("messageInput").value = "";
-
+                    loadMessages(); // 🔁 Refresh the messages list
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -144,8 +140,30 @@
                 });
             }
         }
-
+    
+        function loadMessages() {
+            fetch('/messages') // 🔁 Get saved messages
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById("messagesContainer");
+                    if (!data.length) {
+                        container.innerHTML = "<p>No messages yet 💌</p>";
+                        return;
+                    }
+    
+                    container.innerHTML = data.map(msg => `
+                        <div style="margin-bottom: 10px; padding: 10px; border-bottom: 1px solid #ddd;">
+                            <strong>${new Date(msg.timestamp).toLocaleString()}</strong><br>
+                            ${msg.content}
+                        </div>
+                    `).join('');
+                });
+        }
+    
+        // 🔁 Load messages when the page loads
+        window.onload = loadMessages;
     </script>
+
 </body>
 </html>
 
